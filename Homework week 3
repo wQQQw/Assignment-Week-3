@@ -1,0 +1,80 @@
+<h1>
+  HIPSTER TWITTER
+</h1>
+<input type = "text" id = "a"> </input>
+<button id = "b">
+  Tweet
+</button>
+<p id="c">
+</p>
+<ul id = "d">
+</ul>
+
+
+let list = [];
+document.getElementById("b").addEventListener ("click", function(){
+  let value = document.getElementById("a").value;
+  list.push({text: value, isLiked: false});
+  console.log(list);
+  document.getElementById("a").value = "";
+  addValue();
+  document.getElementById("c").innerHTML = "140 characters remaining";
+}
+)
+document.getElementById("a").addEventListener ("keydown", function(){
+  countWord();
+}
+)
+
+function addValue(){
+  let html = "";
+  for(let i = 0; i < list.length; i++){
+    
+    html += `<li>${list[i].text} <a href='#' onclick='updateList(${i})'>Retweet</a> <a href='#' onclick='toggle(${i})'>Like</a> <a href='#' onclick='remove(${i})'>Remove</a></li>\n`;
+  }
+    document.getElementById("d").innerHTML = html;
+}
+
+function countWord(){
+  let field = document.getElementById("a");
+  let max = 140;
+  let count;
+  if(field.value.length > max){
+    field.value = field.value.substring(0, max);
+  }
+		else{
+		count = max - field.value.length;
+        }
+  document.getElementById("c").innerHTML = `${count} characters remaining`;
+}
+
+function updateList(i){
+  list.push(list[i]);
+  addValue();
+}
+
+function remove(i){
+  list.splice(i,1);
+  addValue();
+}
+
+function toggle(i){
+  for(let i = 0; i < list.length; i++){
+  list[i].isLiked = !(list[i].isLiked);
+    console.log(list[i]);
+  }
+  addValue();
+}
+document.getElementById("d").addEventListener ("click", function(){
+  changeLiked();
+})
+function changeLiked(i){
+  for(let i = 0; i < list.length; i++){
+  if (list[i].isLiked = false){
+    document.getElementById("d").innerHTML = `<li>${list[i].text} <a href='#' onclick='updateList(${i})'>Retweet</a> <a href='#' onclick='toggle(${i})'>Dislike</a> <a href='#' onclick='remove(${i})'>Remove</a></li>\n`;
+  }
+  if (list[i].isLiked = true){
+    document.getElementById("d").innerHTML = `<li>${list[i].text} <a href='#' onclick='updateList(${i})'>Retweet</a> <a href='#' onclick='toggle(${i})'>Like</a> <a href='#' onclick='remove(${i})'>Remove</a></li>\n`;
+  }
+  }  
+}
